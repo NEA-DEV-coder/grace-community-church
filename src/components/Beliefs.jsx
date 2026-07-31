@@ -1,3 +1,5 @@
+import Reveal from "./Reveal";
+
 const beliefs = [
   {
     title: "The Bible",
@@ -122,7 +124,7 @@ export default function Beliefs() {
   return (
     <section id="beliefs" className="bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <Reveal variant="up" className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-gold-600">
             What We Believe
           </p>
@@ -133,30 +135,33 @@ export default function Beliefs() {
             Our beliefs are rooted in Scripture and centered on the gospel of
             Jesus Christ. Here are the essentials we hold dear.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {beliefs.map((b) => (
-            <div
+          {beliefs.map((b, i) => (
+            <Reveal
               key={b.title}
-              className="group relative overflow-hidden rounded-2xl border border-navy-100 bg-gradient-to-br from-white to-navy-50 p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              variant={i % 3 === 1 ? "zoom" : "up"}
+              delay={(i % 3) * 120}
             >
-              <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-gold-100 transition group-hover:bg-gold-200" />
-              <div className="relative">
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-navy-900 text-gold-400 transition group-hover:bg-gold-500 group-hover:text-navy-900">
-                  {b.icon}
+              <div className="group relative h-full overflow-hidden rounded-2xl border border-navy-100 bg-gradient-to-br from-white to-navy-50 p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                <div className="absolute right-0 top-0 h-24 w-24 translate-x-8 -translate-y-8 rounded-full bg-gold-100 transition group-hover:bg-gold-200" />
+                <div className="relative">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-navy-900 text-gold-400 transition group-hover:bg-gold-500 group-hover:text-navy-900">
+                    {b.icon}
+                  </div>
+                  <h3 className="mt-4 font-serif text-xl font-semibold text-navy-900">
+                    {b.title}
+                  </h3>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-gold-600">
+                    {b.verse}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-navy-600">
+                    {b.text}
+                  </p>
                 </div>
-                <h3 className="mt-4 font-serif text-xl font-semibold text-navy-900">
-                  {b.title}
-                </h3>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-gold-600">
-                  {b.verse}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-navy-600">
-                  {b.text}
-                </p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

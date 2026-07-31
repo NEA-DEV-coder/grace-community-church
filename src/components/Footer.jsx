@@ -1,3 +1,5 @@
+import Reveal from "./Reveal";
+
 const quickLinks = [
   { label: "Plan Your Visit", href: "#visit" },
   { label: "What We Believe", href: "#beliefs" },
@@ -51,124 +53,134 @@ export default function Footer() {
   return (
     <footer className="bg-navy-950 text-white">
       {/* Newsletter strip */}
-      <div className="border-b border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 py-10 sm:px-6 lg:flex-row lg:px-8">
-          <div>
-            <h3 className="font-serif text-2xl font-bold">
-              Stay Connected with Grace
-            </h3>
-            <p className="mt-1 text-white/65">
-              Get weekly encouragement, event updates, and sermon alerts.
-            </p>
-          </div>
-          <form
-            className="flex w-full max-w-md gap-2"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              required
-              placeholder="Enter your email"
-              className="flex-1 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm text-white placeholder-white/50 outline-none transition focus:border-gold-400"
-            />
-            <button
-              type="submit"
-              className="rounded-full bg-gold-500 px-6 py-3 text-sm font-bold text-navy-900 transition hover:bg-gold-400"
+      <Reveal variant="fade">
+        <div className="border-b border-white/10">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 py-10 sm:px-6 lg:flex-row lg:px-8">
+            <div>
+              <h3 className="font-serif text-2xl font-bold">
+                Stay Connected with Grace
+              </h3>
+              <p className="mt-1 text-white/65">
+                Get weekly encouragement, event updates, and sermon alerts.
+              </p>
+            </div>
+            <form
+              className="flex w-full max-w-md gap-2"
+              onSubmit={(e) => e.preventDefault()}
             >
-              Subscribe
-            </button>
-          </form>
+              <input
+                type="email"
+                required
+                placeholder="Enter your email"
+                className="flex-1 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm text-white placeholder-white/50 outline-none transition focus:border-gold-400"
+              />
+              <button
+                type="submit"
+                className="rounded-full bg-gold-500 px-6 py-3 text-sm font-bold text-navy-900 transition hover:bg-gold-400"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      </Reveal>
 
       {/* Main footer */}
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
         {/* Brand */}
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 font-serif text-lg font-bold text-navy-900">
-              GC
-            </span>
-            <span className="font-serif text-lg font-semibold">
-              Grace Community Church
-            </span>
+        <Reveal variant="up">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 font-serif text-lg font-bold text-navy-900">
+                GC
+              </span>
+              <span className="font-serif text-lg font-semibold">
+                Grace Community Church
+              </span>
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-white/65">
+              A place to belong, grow, and serve. We exist to help people take
+              their next step toward Jesus Christ.
+            </p>
+            <div className="mt-5 flex gap-3">
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href="#top"
+                  aria-label={s.label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/80 transition hover:bg-gold-500 hover:text-navy-900"
+                >
+                  {s.icon}
+                </a>
+              ))}
+            </div>
           </div>
-          <p className="mt-4 text-sm leading-relaxed text-white/65">
-            A place to belong, grow, and serve. We exist to help people take
-            their next step toward Jesus Christ.
-          </p>
-          <div className="mt-5 flex gap-3">
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                href="#top"
-                aria-label={s.label}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/80 transition hover:bg-gold-500 hover:text-navy-900"
-              >
-                {s.icon}
-              </a>
-            ))}
-          </div>
-        </div>
+        </Reveal>
 
         {/* Quick links */}
-        <div>
-          <h4 className="font-serif text-lg font-semibold text-gold-300">
-            Quick Links
-          </h4>
-          <ul className="mt-4 space-y-2.5">
-            {quickLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className="text-sm text-white/65 transition hover:text-gold-300"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Reveal variant="up" delay={120}>
+          <div>
+            <h4 className="font-serif text-lg font-semibold text-gold-300">
+              Quick Links
+            </h4>
+            <ul className="mt-4 space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-white/65 transition hover:text-gold-300"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
 
         {/* Connect */}
-        <div>
-          <h4 className="font-serif text-lg font-semibold text-gold-300">
-            Get Involved
-          </h4>
-          <ul className="mt-4 space-y-2.5">
-            {connectLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className="text-sm text-white/65 transition hover:text-gold-300"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Reveal variant="up" delay={240}>
+          <div>
+            <h4 className="font-serif text-lg font-semibold text-gold-300">
+              Get Involved
+            </h4>
+            <ul className="mt-4 space-y-2.5">
+              {connectLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-white/65 transition hover:text-gold-300"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
 
         {/* Service times */}
-        <div>
-          <h4 className="font-serif text-lg font-semibold text-gold-300">
-            Service Times
-          </h4>
-          <ul className="mt-4 space-y-2.5">
-            {serviceTimes.map((time) => (
-              <li key={time} className="text-sm text-white/65">
-                {time}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
-            <p className="text-sm font-semibold text-white">
-              📍 1234 Grace Lane
-            </p>
-            <p className="text-sm text-white/65">Springfield, ST 56789</p>
-            <p className="mt-1 text-sm text-white/65">(555) 123-4567</p>
+        <Reveal variant="up" delay={360}>
+          <div>
+            <h4 className="font-serif text-lg font-semibold text-gold-300">
+              Service Times
+            </h4>
+            <ul className="mt-4 space-y-2.5">
+              {serviceTimes.map((time) => (
+                <li key={time} className="text-sm text-white/65">
+                  {time}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
+              <p className="text-sm font-semibold text-white">
+                📍 1234 Grace Lane
+              </p>
+              <p className="text-sm text-white/65">Springfield, ST 56789</p>
+              <p className="mt-1 text-sm text-white/65">(555) 123-4567</p>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
 
       {/* Bottom bar */}

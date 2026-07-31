@@ -18,3 +18,8 @@
 - [x] Build Footer
 - [x] Install dependencies
 - [x] Verify site runs with dev server
+- [x] Install GitHub CLI
+- [x] Authenticate GitHub account (NEA-DEV-coder)
+- [x] Create GitHub repository and push code
+- [x] Configure GitHub Pages deployment
+- [x] Deploy live site via GitHub Actions

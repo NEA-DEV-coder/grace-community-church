@@ -1,3 +1,5 @@
+import Reveal from "./Reveal";
+
 const visitPoints = [
   {
     title: "What to Expect",
@@ -92,7 +94,7 @@ export default function PlanVisit() {
   return (
     <section id="visit" className="bg-navy-50 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <Reveal variant="up" className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-gold-600">
             Plan Your Visit
           </p>
@@ -104,70 +106,70 @@ export default function PlanVisit() {
             need to know before you arrive — so you can simply relax and
             worship.
           </p>
-        </div>
+        </Reveal>
 
         {/* Info cards */}
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {visitPoints.map((point) => (
-            <div
-              key={point.title}
-              className="group rounded-2xl border border-navy-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gold-100 text-gold-700 transition group-hover:bg-gold-500 group-hover:text-white">
-                {point.icon}
+          {visitPoints.map((point, i) => (
+            <Reveal key={point.title} variant="up" delay={i * 110}>
+              <div className="group h-full rounded-2xl border border-navy-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gold-100 text-gold-700 transition group-hover:bg-gold-500 group-hover:text-white">
+                  {point.icon}
+                </div>
+                <h3 className="mt-4 font-serif text-xl font-semibold text-navy-900">
+                  {point.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-navy-600">
+                  {point.description}
+                </p>
               </div>
-              <h3 className="mt-4 font-serif text-xl font-semibold text-navy-900">
-                {point.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-navy-600">
-                {point.description}
-              </p>
-            </div>
+            </Reveal>
           ))}
         </div>
 
         {/* Service schedule */}
-        <div className="mt-16 overflow-hidden rounded-2xl bg-navy-900 shadow-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-5">
-            <div
-              className="lg:col-span-2 bg-cover bg-center"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(16, 42, 67, 0.55), rgba(16, 42, 67, 0.55)), url(https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=1740&auto=format&fit=crop)",
-              }}
-            >
-              <div className="flex h-full flex-col justify-center p-8 sm:p-10">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold-400">
-                  Service Times
+        <Reveal variant="zoom" delay={120} className="mt-16">
+          <div className="overflow-hidden rounded-2xl bg-navy-900 shadow-xl">
+            <div className="grid grid-cols-1 lg:grid-cols-5">
+              <div
+                className="lg:col-span-2 bg-cover bg-center"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(rgba(16, 42, 67, 0.55), rgba(16, 42, 67, 0.55)), url(https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=1740&auto=format&fit=crop)",
+                }}
+              >
+                <div className="flex h-full flex-col justify-center p-8 sm:p-10">
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-gold-400">
+                    Service Times
+                  </p>
+                  <h3 className="mt-3 font-serif text-3xl font-bold text-white">
+                    Join Us This Sunday
+                  </h3>
+                </div>
+              </div>
+              <div className="lg:col-span-3 p-8 sm:p-10">
+                <div className="space-y-4">
+                  {services.map((s, i) => (
+                    <Reveal key={s.label} variant="right" delay={i * 120}>
+                      <div className="flex items-center justify-between rounded-xl border border-white/15 bg-white/5 px-5 py-4 transition hover:bg-white/10">
+                        <span className="text-base font-semibold text-white">
+                          {s.label}
+                        </span>
+                        <span className="text-sm font-medium text-gold-300">
+                          {s.time}
+                        </span>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+                <p className="mt-6 text-sm text-white/70">
+                  Directions: 1234 Grace Lane, Springfield, ST 56789 · Free
+                  parking & kids check-in at the west entrance.
                 </p>
-                <h3 className="mt-3 font-serif text-3xl font-bold text-white">
-                  Join Us This Sunday
-                </h3>
               </div>
-            </div>
-            <div className="lg:col-span-3 p-8 sm:p-10">
-              <div className="space-y-4">
-                {services.map((s) => (
-                  <div
-                    key={s.label}
-                    className="flex items-center justify-between rounded-xl border border-white/15 bg-white/5 px-5 py-4 transition hover:bg-white/10"
-                  >
-                    <span className="text-base font-semibold text-white">
-                      {s.label}
-                    </span>
-                    <span className="text-sm font-medium text-gold-300">
-                      {s.time}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-6 text-sm text-white/70">
-                Directions: 1234 Grace Lane, Springfield, ST 56789 · Free
-                parking & kids check-in at the west entrance.
-              </p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

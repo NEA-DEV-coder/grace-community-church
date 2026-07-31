@@ -16,7 +16,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-navy-900/95 backdrop-blur-sm shadow-lg">
+    <header className="animate-header fixed inset-x-0 top-0 z-50 bg-navy-900/95 backdrop-blur-sm shadow-lg">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Brand */}
         <a href="#top" className="flex items-center gap-2">
