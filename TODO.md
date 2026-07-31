@@ -23,3 +23,5 @@
 - [x] Create GitHub repository and push code
 - [x] Configure GitHub Pages deployment
 - [x] Deploy live site via GitHub Actions
+- [x] Add scroll-triggered animations (fade-in, slide-in, zoom) to all sections
+- [x] Deploy animated version to GitHub Pages
