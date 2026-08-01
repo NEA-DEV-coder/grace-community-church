@@ -35,16 +35,36 @@ app.use("/api/prayer-requests", requestRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/donations", donationRoutes);
 
-// Serve admin dashboard (built React app)
-const adminDist = path.join(__dirname, "..", "admin", "dist");
-app.use(express.static(adminDist));
+// --- Static sites -----------------------------------------------------
+// Public site (built from ../dist, base "/grace-community-church/")
+const publicDist = path.join(__dirname, "..", "dist");
+app.use("/grace-community-church", express.static(publicDist));
 
-// SPA fallback: serve admin index.html for non-API routes
-app.get("*", (req, res, next) => {
-  if (req.path.startsWith("/api")) return next();
+// Admin dashboard (built from ../admin/dist, base "/admin/")
+const adminDist = path.join(__dirname, "..", "admin", "dist");
+app.use("/admin", express.static(adminDist));
+
+// SPA fallback for admin routes
+app.get("/admin/*", (req, res) => {
   res.sendFile(path.join(adminDist, "index.html"), (err) => {
-    if (err) next();
+    if (err)
+      res
+        .status(404)
+        .send("Admin build not found. Run `cd admin && npm run build`.");
   });
+});
+
+// SPA fallback for public site
+app.get("/grace-community-church/*", (req, res) => {
+  res.sendFile(path.join(publicDist, "index.html"), (err) => {
+    if (err)
+      res.status(404).send("Public build not found. Run `npm run build`.");
+  });
+});
+
+// Root redirect -> public site
+app.get("/", (req, res) => {
+  res.redirect("/grace-community-church/");
 });
 
 // 404 for unmatched API routes
@@ -70,8 +90,11 @@ try {
 
 app.listen(PORT, () => {
   console.log(
-    `🚀 Grace Community Church API running at http://localhost:${PORT}`,
+    `🚀 Grace Community Church server running at http://localhost:${PORT}`,
   );
-  console.log(`   Health check: http://localhost:${PORT}/api/health`);
-  console.log(`   Admin dashboard: http://localhost:${PORT}`);
+  console.log(
+    `   Public site:     http://localhost:${PORT}/grace-community-church/`,
+  );
+  console.log(`   Admin dashboard: http://localhost:${PORT}/admin`);
+  console.log(`   Health check:    http://localhost:${PORT}/api/health`);
 });
