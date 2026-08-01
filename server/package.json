@@ -1,13 +1,13 @@
 {
   "name": "grace-community-church-server",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "seed": "node seed.js",
-    "dev": "node --watch server.js",
-    "build": "cd .. && npm run build:all"
+    "seed": "node seed-cli.js",
+    "dev": "node --watch server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

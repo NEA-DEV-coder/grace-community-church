@@ -10,8 +10,9 @@
 2. In Render dashboard, click **New +** → **Web Service**.
 3. Connect your GitHub repo.
 4. Render will auto-detect the `render.yaml` config. Or manually set:
-   - **Build Command:** `npm run build:all`
-   - **Start Command:** `cd server && npm start`
+   - **Root Directory:** `/` (repo root)
+   - **Build Command:** `npm install && npm run build:all`
+   - **Start Command:** `npm start`
    - **Health Check:** `/api/health`
 5. Render injects a `PORT` env var automatically. The server listens on it.
 6. Click **Deploy**.
@@ -27,7 +28,7 @@ After deploy:
 [Railway](https://railway.app) works similarly:
 
 1. Connect repo.
-2. Set **Start Command** to `cd server && npm start`.
+2. Set **Start Command** to `npm start` (runs from repo root).
 3. Railway auto-injects `PORT`.
 
 ## Option 3: Fly.io
@@ -42,8 +43,8 @@ fly deploy
 ```bash
 git clone https://github.com/YOUR_USER/grace-community-church.git
 cd grace-community-church
+npm install
 npm run build:all
-cd server
 npm start
 ```
 
@@ -67,13 +68,13 @@ pm2 start server/server.js --name church
 
 ```bash
 # Terminal 1: Start the API server
-cd server && npm run dev
+npm run dev:server
 
 # Terminal 2: Start the public site dev server
 npm run dev
 
 # Terminal 3: Start the admin dashboard dev server
-cd admin && npm run dev
+npm run dev:admin
 ```
 
 Then visit:

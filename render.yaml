@@ -9,7 +9,7 @@ services:
     region: oregon
     plan: free
     buildCommand: npm run build:all
-    startCommand: cd server && npm start
+    startCommand: npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_VERSION

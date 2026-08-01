@@ -78,14 +78,25 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal server error" });
 });
 
+let dbLoaded = false;
 try {
   loadDb();
+  dbLoaded = true;
   console.log("📦 Data store loaded");
-} catch (err) {
-  console.warn(`⚠️  ${err.message}`);
-  console.warn(
-    "Run `npm run seed` in the server directory to initialize data.",
-  );
+} catch {
+  console.log("📦 No data store found — seeding initial database...");
+}
+
+if (!dbLoaded) {
+  try {
+    const { seedDatabase } = await import("./seed.js");
+    await seedDatabase();
+    loadDb();
+    console.log("📦 Data store seeded & loaded");
+  } catch (err) {
+    console.error("❌ Failed to seed database:", err);
+    process.exit(1);
+  }
 }
 
 app.listen(PORT, () => {

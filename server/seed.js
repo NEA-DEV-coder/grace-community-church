@@ -6,7 +6,7 @@ import { DATA_FILE, resetDb } from "./db.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-async function main() {
+export async function seedDatabase() {
   const passwordHash = await bcrypt.hash("admin123", 10);
 
   const data = {
@@ -248,8 +248,3 @@ async function main() {
   console.log("");
   console.log("   ⚠️  CHANGE THIS PASSWORD BEFORE PRODUCTION USE.");
 }
-
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
