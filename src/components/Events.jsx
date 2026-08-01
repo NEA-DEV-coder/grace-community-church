@@ -1,138 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Reveal from "./Reveal";
+import { getEvents } from "../api";
 
 const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const monthDays = [
-  { day: 1, events: [] },
-  { day: 2, events: [] },
-  {
-    day: 3,
-    events: [{ title: "Bible Study", time: "7:00 PM", color: "bg-gold-500" }],
-  },
-  { day: 4, events: [] },
-  { day: 5, events: [] },
-  { day: 6, events: [] },
-  { day: 7, events: [] },
-  {
-    day: 8,
-    events: [
-      {
-        title: "Sunday Worship",
-        time: "9:00 & 11:00 AM",
-        color: "bg-navy-700",
-      },
-    ],
-  },
-  { day: 9, events: [] },
-  {
-    day: 10,
-    events: [{ title: "Bible Study", time: "7:00 PM", color: "bg-gold-500" }],
-  },
-  { day: 11, events: [] },
-  { day: 12, events: [] },
-  { day: 13, events: [] },
-  { day: 14, events: [] },
-  {
-    day: 15,
-    events: [
-      {
-        title: "Sunday Worship",
-        time: "9:00 & 11:00 AM",
-        color: "bg-navy-700",
-      },
-      { title: "Kids' Fun Fair", time: "12:00 PM", color: "bg-gold-500" },
-    ],
-  },
-  { day: 16, events: [] },
-  {
-    day: 17,
-    events: [{ title: "Bible Study", time: "7:00 PM", color: "bg-gold-500" }],
-  },
-  { day: 18, events: [] },
-  { day: 19, events: [] },
-  { day: 20, events: [] },
-  { day: 21, events: [] },
-  {
-    day: 22,
-    events: [
-      {
-        title: "Sunday Worship",
-        time: "9:00 & 11:00 AM",
-        color: "bg-navy-700",
-      },
-    ],
-  },
-  { day: 23, events: [] },
-  {
-    day: 24,
-    events: [{ title: "Bible Study", time: "7:00 PM", color: "bg-gold-500" }],
-  },
-  { day: 25, events: [] },
-  {
-    day: 26,
-    events: [
-      { title: "Summer Picnic", time: "11:00 AM", color: "bg-gold-500" },
-    ],
-  },
-  { day: 27, events: [] },
-  { day: 28, events: [] },
-  {
-    day: 29,
-    events: [
-      {
-        title: "Sunday Worship",
-        time: "9:00 & 11:00 AM",
-        color: "bg-navy-700",
-      },
-    ],
-  },
-  {
-    day: 30,
-    events: [{ title: "Prayer Night", time: "7:30 PM", color: "bg-gold-500" }],
-  },
-];
-
-const upcomingEvents = [
-  {
-    title: "Sunday Worship Gathering",
-    date: "Every Sunday",
-    time: "9:00 & 11:00 AM",
-    location: "Main Sanctuary",
-    tag: "Weekly",
-  },
-  {
-    title: "Wednesday Bible Study",
-    date: "Every Wednesday",
-    time: "7:00 PM",
-    location: "Fellowship Hall",
-    tag: "Weekly",
-  },
-  {
-    title: "Kids' Fun Fair",
-    date: "June 15, 2025",
-    time: "12:00 PM – 4:00 PM",
-    location: "Church Grounds",
-    tag: "Family",
-  },
-  {
-    title: "Community Summer Picnic",
-    date: "June 26, 2025",
-    time: "11:00 AM – 3:00 PM",
-    location: "Riverside Park",
-    tag: "Outreach",
-  },
-  {
-    title: "Prayer Night",
-    date: "June 30, 2025",
-    time: "7:30 PM",
-    location: "Prayer Chapel",
-    tag: "Prayer",
-  },
-];
-
 export default function Events() {
   const [month, setMonth] = useState("June 2025");
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    getEvents()
+      .then((data) => setEvents(data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  const upcomingEvents = events.slice(0, 5);
 
   return (
     <section id="events" className="bg-white py-20 sm:py-28">
@@ -202,7 +87,6 @@ export default function Events() {
                 </div>
               </div>
 
-              {/* Weekday header */}
               <div className="mt-6 grid grid-cols-7 gap-1 text-center">
                 {weekDays.map((d) => (
                   <span
@@ -214,25 +98,31 @@ export default function Events() {
                 ))}
               </div>
 
-              {/* Days grid */}
               <div className="grid grid-cols-7 gap-1">
-                {monthDays.map(({ day, events }, i) => (
+                {Array.from({ length: 30 }, (_, i) => i + 1).map((day) => (
                   <div
-                    key={i}
+                    key={day}
                     className="relative flex min-h-[4rem] flex-col items-center rounded-lg bg-white p-1.5 shadow-sm"
                   >
                     <span className="text-sm font-medium text-navy-700">
                       {day}
                     </span>
-                    {events.map((ev, idx) => (
-                      <span
-                        key={idx}
-                        className={`mt-1 hidden w-full rounded-full ${ev.color} px-1 py-0.5 text-center text-[10px] font-semibold text-white sm:block`}
-                        title={`${ev.title} · ${ev.time}`}
-                      >
-                        {ev.title.split(" ")[0]}
-                      </span>
-                    ))}
+                    {events
+                      .filter((ev) => {
+                        if (!ev.date) return false;
+                        const d = new Date(ev.date);
+                        return d.getDate() === day;
+                      })
+                      .slice(0, 2)
+                      .map((ev, idx) => (
+                        <span
+                          key={idx}
+                          className="mt-1 hidden w-full rounded-full bg-gold-500 px-1 py-0.5 text-center text-[10px] font-semibold text-white sm:block"
+                          title={ev.title}
+                        >
+                          {ev.title.split(" ")[0]}
+                        </span>
+                      ))}
                   </div>
                 ))}
               </div>
@@ -241,40 +131,50 @@ export default function Events() {
 
           {/* Upcoming events list */}
           <Reveal variant="right" className="flex flex-col gap-4">
-            {upcomingEvents.map((ev, i) => (
-              <Reveal key={ev.title} variant="up" delay={i * 100}>
-                <div className="group flex items-center gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-                  {/* Date badge */}
-                  <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-xl bg-navy-900 text-white">
-                    <span className="text-lg font-bold leading-none">
-                      {ev.date.split(" ").pop().replace(",", "")}
-                    </span>
-                    <span className="mt-1 text-[10px] uppercase tracking-wider text-gold-400">
-                      {ev.date.includes("Every")
-                        ? "Weekly"
-                        : ev.date.split(" ")[0]}
-                    </span>
+            {loading ? (
+              <div className="text-center text-navy-500">Loading events...</div>
+            ) : upcomingEvents.length === 0 ? (
+              <div className="text-center text-navy-400">
+                No upcoming events at this time.
+              </div>
+            ) : (
+              upcomingEvents.map((ev, i) => (
+                <Reveal key={ev.id || ev.title} variant="up" delay={i * 100}>
+                  <div className="group flex items-center gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+                    <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-xl bg-navy-900 text-white">
+                      <span className="text-lg font-bold leading-none">
+                        {ev.date ? new Date(ev.date).getDate().toString() : "?"}
+                      </span>
+                      <span className="mt-1 text-[10px] uppercase tracking-wider text-gold-400">
+                        {ev.date
+                          ? new Date(ev.date)
+                              .toLocaleString("en-US", { month: "short" })
+                              .toUpperCase()
+                          : "N/A"}
+                      </span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="inline-block rounded-full bg-gold-100 px-2.5 py-0.5 text-xs font-semibold text-gold-800">
+                        {ev.tag || "General"}
+                      </span>
+                      <h3 className="mt-1 truncate font-serif text-lg font-semibold text-navy-900">
+                        {ev.title}
+                      </h3>
+                      <p className="mt-0.5 text-sm text-navy-600">
+                        {ev.time ? ev.time + (ev.location ? " · " : "") : ""}
+                        {ev.location || ""}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      className="hidden shrink-0 rounded-full border border-navy-200 px-4 py-1.5 text-xs font-semibold text-navy-700 transition hover:bg-navy-900 hover:text-white sm:block"
+                    >
+                      RSVP
+                    </button>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="inline-block rounded-full bg-gold-100 px-2.5 py-0.5 text-xs font-semibold text-gold-800">
-                      {ev.tag}
-                    </span>
-                    <h3 className="mt-1 truncate font-serif text-lg font-semibold text-navy-900">
-                      {ev.title}
-                    </h3>
-                    <p className="mt-0.5 text-sm text-navy-600">
-                      {ev.time} · {ev.location}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    className="hidden shrink-0 rounded-full border border-navy-200 px-4 py-1.5 text-xs font-semibold text-navy-700 transition hover:bg-navy-900 hover:text-white sm:block"
-                  >
-                    RSVP
-                  </button>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ))
+            )}
             <a
               href="#events"
               className="mt-2 text-center text-sm font-semibold text-gold-700 transition hover:text-gold-600"

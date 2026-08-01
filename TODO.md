@@ -1,27 +1,33 @@
-## Plan Steps (Frontend)
+# Church Website - Task Progress
+
+## Completed
 
 - [x] Create project structure (Vite + React + Tailwind)
 - [x] Configure Tailwind CSS v4
-- [x] Build all sections (Navbar, Hero, Visit, Beliefs, Leadership, Sermons, Events, Donate, Blog, Gallery, Contact, Footer)
+- [x] Build Navbar component
+- [x] Build Hero component (church name)
+- [x] Build Plan Your Visit section
+- [x] Build What We Believe section
+- [x] Build Staff & Leadership profiles
+- [x] Build Sermons & Media library
+- [x] Build Event Calendar
+- [x] Build Online Donation integration
+- [x] Build Blog section
+- [x] Build Photo & Video Galleries
+- [x] Build Prayer Request & Contact form + Map
+- [x] Build Footer
 - [x] Install dependencies
-- [x] Deploy live site to GitHub Pages
-- [x] Add scroll-triggered animations
-- [x] Commit all changes to GitHub
+- [x] Verify site runs with dev server
 
-## Plan Steps (Backend + Admin Dashboard)
+## API Wiring (Public Site → Express Backend)
 
-- [ ] Build Express backend (REST API + JWT auth + JSON storage)
-- [ ] Seed database with admin user + sample content
-- [ ] Build Admin dashboard (React + Tailwind)
-- [ ] Add Login page with JWT auth
-- [ ] Add Dashboard with stats
-- [ ] Add Sermons CRUD admin page
-- [ ] Add Events CRUD admin page
-- [ ] Add Blog posts CRUD admin page
-- [ ] Add Staff CRUD admin page
-- [ ] Add Prayer Requests inbox admin page
-- [ ] Add Messages inbox admin page
-- [ ] Add Donations admin page
-- [ ] Connect public site sections to API with fallback
-- [ ] Install dependencies and test everything
-- [ ] Commit backend + admin to GitHub
+- [x] Create src/api.js REST client
+- [x] Convert Sermons.jsx to fetch from /api/sermons
+- [x] Convert Events.jsx to fetch from /api/events
+- [x] Convert Blog.jsx to fetch from /api/posts
+- [x] Convert Leadership.jsx to fetch from /api/staff
+- [x] Wire Contact.jsx form to POST /api/prayer-requests & /api/messages
+- [x] Add vite dev proxy (/api → localhost:5000)
+- [x] Verify public site builds cleanly
+- [x] Verify admin dashboard builds cleanly
+- [x] Run API smoke test (all passed)

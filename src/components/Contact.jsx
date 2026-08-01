@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Reveal from "./Reveal";
+import { submitPrayerRequest, submitContactMessage } from "../api";
 
 const contactInfo = [
   {
@@ -69,6 +70,8 @@ const contactInfo = [
 export default function Contact() {
   const [requestType, setRequestType] = useState("Prayer Request");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -80,9 +83,31 @@ export default function Contact() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
+    setError("");
+    try {
+      if (requestType === "Prayer Request") {
+        await submitPrayerRequest({
+          name: form.name,
+          email: form.email,
+          request: form.message,
+        });
+      } else {
+        await submitContactMessage({
+          name: form.name,
+          email: form.email,
+          subject: form.subject || "General Contact",
+          message: form.message,
+        });
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -281,13 +306,21 @@ export default function Contact() {
                       />
                     </div>
 
+                    {error && (
+                      <div className="rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-600">
+                        {error}
+                      </div>
+                    )}
                     <button
                       type="submit"
-                      className="w-full rounded-full bg-gold-500 py-3.5 text-sm font-bold text-navy-900 shadow-lg transition hover:-translate-y-0.5 hover:bg-gold-400"
+                      disabled={submitting}
+                      className="w-full rounded-full bg-gold-500 py-3.5 text-sm font-bold text-navy-900 shadow-lg transition hover:-translate-y-0.5 hover:bg-gold-400 disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      {requestType === "Prayer Request"
-                        ? "Submit Prayer Request"
-                        : "Send Message"}
+                      {submitting
+                        ? "Sending..."
+                        : requestType === "Prayer Request"
+                          ? "Submit Prayer Request"
+                          : "Send Message"}
                     </button>
                     <p className="text-center text-xs text-navy-400">
                       Your information is kept confidential and never shared.
