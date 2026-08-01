@@ -31,3 +31,14 @@
 - [x] Verify public site builds cleanly
 - [x] Verify admin dashboard builds cleanly
 - [x] Run API smoke test (all passed)
+
+## Deploy Fix: Same-Origin Public Site + API + Admin
+
+- [x] Update server.js to serve public site & admin from Express
+- [x] Rebuild public site with base `/grace-community-church/`
+- [x] Rebuild admin with base `/admin/`
+- [x] Verify public site returns 200
+- [x] Verify admin dashboard returns 200
+- [x] Verify API returns 200 with sermon data
+- [x] Confirm admin-added sermons appear in API response
+- [x] Commit and push to GitHub

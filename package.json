@@ -9,7 +9,10 @@
     "preview": "vite preview",
     "dev:server": "cd server && npm run dev",
     "dev:admin": "cd admin && npm run dev",
-    "seed": "cd server && npm run seed"
+    "seed": "cd server && npm run seed",
+    "build:all": "npm run build && cd admin && npm install && npm run build",
+    "start": "cd server && npm start",
+    "deploy": "npm run build:all && npm start"
   },
   "dependencies": {
     "react": "^19.1.0",

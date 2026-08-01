@@ -1,0 +1,22 @@
+# Render Blueprint Configuration
+# Deploys the entire Grace Community Church website as a single web service.
+# The Express server serves the public site, admin dashboard, and API from one origin.
+
+services:
+  - type: web
+    name: grace-community-church
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm run build:all
+    startCommand: cd server && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        generateValue: true
