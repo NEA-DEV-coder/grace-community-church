@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build:site": "vite build",
+    "build": "npm run build:site && npm --prefix admin run build",
     "preview": "vite preview",
     "dev:server": "node server/server.js",
     "dev:admin": "npm --prefix admin run dev",
     "seed": "node server/seed-cli.js",
-    "build:all": "npm run build && npm --prefix admin run build",
+    "build:all": "npm run build",
     "start": "node server/server.js",
     "deploy": "npm run build:all && node server/server.js"
   },
