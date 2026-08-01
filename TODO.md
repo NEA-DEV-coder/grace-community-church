@@ -1,27 +1,27 @@
-# Church Website - Task Progress
-
-## Plan Steps
+## Plan Steps (Frontend)
 
 - [x] Create project structure (Vite + React + Tailwind)
 - [x] Configure Tailwind CSS v4
-- [x] Build Navbar component
-- [x] Build Hero component (church name)
-- [x] Build Plan Your Visit section
-- [x] Build What We Believe section
-- [x] Build Staff & Leadership profiles
-- [x] Build Sermons & Media library
-- [x] Build Event Calendar
-- [x] Build Online Donation integration
-- [x] Build Blog section
-- [x] Build Photo & Video Galleries
-- [x] Build Prayer Request & Contact form + Map
-- [x] Build Footer
+- [x] Build all sections (Navbar, Hero, Visit, Beliefs, Leadership, Sermons, Events, Donate, Blog, Gallery, Contact, Footer)
 - [x] Install dependencies
-- [x] Verify site runs with dev server
-- [x] Install GitHub CLI
-- [x] Authenticate GitHub account (NEA-DEV-coder)
-- [x] Create GitHub repository and push code
-- [x] Configure GitHub Pages deployment
-- [x] Deploy live site via GitHub Actions
-- [x] Add scroll-triggered animations (fade-in, slide-in, zoom) to all sections
-- [x] Deploy animated version to GitHub Pages
+- [x] Deploy live site to GitHub Pages
+- [x] Add scroll-triggered animations
+- [x] Commit all changes to GitHub
+
+## Plan Steps (Backend + Admin Dashboard)
+
+- [ ] Build Express backend (REST API + JWT auth + JSON storage)
+- [ ] Seed database with admin user + sample content
+- [ ] Build Admin dashboard (React + Tailwind)
+- [ ] Add Login page with JWT auth
+- [ ] Add Dashboard with stats
+- [ ] Add Sermons CRUD admin page
+- [ ] Add Events CRUD admin page
+- [ ] Add Blog posts CRUD admin page
+- [ ] Add Staff CRUD admin page
+- [ ] Add Prayer Requests inbox admin page
+- [ ] Add Messages inbox admin page
+- [ ] Add Donations admin page
+- [ ] Connect public site sections to API with fallback
+- [ ] Install dependencies and test everything
+- [ ] Commit backend + admin to GitHub
