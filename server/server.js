@@ -1,4 +1,6 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 import cors from "cors";
 import { loadDb } from "./db.js";
 
@@ -11,6 +13,7 @@ import requestRoutes from "./routes/requests.js";
 import messageRoutes from "./routes/messages.js";
 import donationRoutes from "./routes/donations.js";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -22,7 +25,7 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });
 });
 
-// Routes
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/sermons", sermonRoutes);
 app.use("/api/events", eventRoutes);
@@ -32,7 +35,19 @@ app.use("/api/prayer-requests", requestRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/donations", donationRoutes);
 
-// 404 handler
+// Serve admin dashboard (built React app)
+const adminDist = path.join(__dirname, "..", "admin", "dist");
+app.use(express.static(adminDist));
+
+// SPA fallback: serve admin index.html for non-API routes
+app.get("*", (req, res, next) => {
+  if (req.path.startsWith("/api")) return next();
+  res.sendFile(path.join(adminDist, "index.html"), (err) => {
+    if (err) next();
+  });
+});
+
+// 404 for unmatched API routes
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
@@ -58,4 +73,5 @@ app.listen(PORT, () => {
     `🚀 Grace Community Church API running at http://localhost:${PORT}`,
   );
   console.log(`   Health check: http://localhost:${PORT}/api/health`);
+  console.log(`   Admin dashboard: http://localhost:${PORT}`);
 });
